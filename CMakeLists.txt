@@ -1,14 +1,29 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-    set (PROJECT_NAME     StockControlSystem)
-    set (OUTPUT_DIRECTORY  "${CMAKE_BINARY_DIR}")
-    # setup version number
-    set (PROJECT_VERSION_MAJOR 1)
-    set (PROJECT_VERSION_MINOR 0)
-    set (PROJECT_VERSION_PATCH 0)
-    set (PROJECT_VERSION_TWEAK 0)
+    set (PROJECT_NAME       StockControlSystem             )
 
-project (${PROJECT_NAME}  VERSION 1.0.0.0 LANGUAGES CXX)
+    set (OUTPUT_DIRECTORY   "${CMAKE_BINARY_DIR}"          )
+
+    set (MAJOR              "${PROJECT_NAME}_VERSION_MAJOR")
+    set (MINOR              "${PROJECT_NAME}_VERSION_MINOR")
+    set (PATCH              "${PROJECT_NAME}_VERSION_PATCH")
+    set (TWEAK              "${PROJECT_NAME}_VERSION_TWEAK")
+    set (VERSION            "${PROJECT_NAME}_VERSION"      )
+
+    # specify version number
+    set (${MAJOR}       1)
+    set (${MINOR}       0)
+    set (${PATCH}       0)
+    set (${TWEAK}       0)
+    set (${VERSION}
+            "${MAJOR}"."${MINOR}"."${PATCH}"."${TWEAK}"
+    )
+
+project (
+    ${PROJECT_NAME}
+    ${VERSION}
+    LANGUAGES CXX
+)
 
     set (CMAKE_INCLUDE_CURRENT_DIR   ON)
 
@@ -21,6 +36,14 @@ project (${PROJECT_NAME}  VERSION 1.0.0.0 LANGUAGES CXX)
 
     set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   "${OUTPUT_DIRECTORY}")
 #   set ( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${OUTPUT_DIRECTORY}")
+
+add_definitions (-Wall -O2)
+
+file (GLOB
+    CPP_SOURCES "${PROJECT_NAME}/src/*.cpp"
+    PRV_HEADERS "${PROJECT_NAME}/inc/private/*.h"
+    PUB_HEADERS "${PROJECT_NAME}/inc/*.h"
+)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check https://doc.qt.io/qt/deployment-android.html for more information.
@@ -35,8 +58,22 @@ project (${PROJECT_NAME}  VERSION 1.0.0.0 LANGUAGES CXX)
 #    endif()
 #endif()
 
-find_package (QT NAMES    Qt6 Qt5    COMPONENTS Widgets REQUIRED)
-find_package (Qt ${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package (
+    QT
+    NAMES
+        Qt6
+        Qt5
+    COMPONENTS
+        Widgets
+    REQUIRED
+)
+find_package (
+    Qt
+    ${QT_VERSION_MAJOR}
+    COMPONENTS
+        Widgets
+    REQUIRED
+)
 
 
 set (PROJECT_SOURCES
